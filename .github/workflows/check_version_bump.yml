@@ -1,0 +1,37 @@
+name: Check Version Bump
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened]
+
+env:
+  BRANCH: ${{ github.head_ref }}
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v3
+        with:
+          ref: main
+          path: "/main"
+
+      - name: Checkout PR
+        uses: actions/checkout@v3
+        with:
+          ref: ${BRANCH}
+          path: "/${BRANCH}"
+
+      - name: validate new version
+        run: bash semver.sh
+
+      - name: Compare versions
+        run: |
+          main_version=$(jq -r '.version' main/version.json)
+          pr_version=$(jq -r '.version' ${BRANCH}/version.json)
+          if [ "$main_version" != "$pr_version" ]; then
+            echo "Version mismatch between main branch and pull request branch"
+            exit 1
+          fi
