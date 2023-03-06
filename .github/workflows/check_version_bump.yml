@@ -16,18 +16,19 @@ jobs:
         run: |
           mkdir main
           mkdir ${BRANCH}
-          
+          ls
+
       - name: Checkout main
         uses: actions/checkout@v3
         with:
           ref: main
-          path: "/main"
+          path: "main"
 
       - name: Checkout PR
         uses: actions/checkout@v3
         with:
           ref: ${BRANCH}
-          path: "/${BRANCH}"
+          path: "${BRANCH}"
 
       - name: validate new version
         run: bash semver.sh
