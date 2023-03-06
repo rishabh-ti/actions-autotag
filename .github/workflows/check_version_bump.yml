@@ -13,9 +13,7 @@ jobs:
 
       - name: Get main version
         id: tm
-        run: |
-          ls
-          echo "MAINV=$(jq -r '.version' version.json)" >> $GITHUB_OUTPUT
+        run: echo "MAINV=$(jq -r '.version' version.json)" >> $GITHUB_OUTPUT
 
       - name: Checkout PR
         uses: actions/checkout@v3
@@ -24,13 +22,12 @@ jobs:
 
       - name: Get PR version
         id: tpr
-        run: |
-          ls
-          echo "PRV=$(jq -r '.version' version.json)" >> $GITHUB_OUTPUT
+        run: echo "PRV=$(jq -r '.version' version.json)" >> $GITHUB_OUTPUT
 
       - name: Compare versions
         run: |
-          if [ ${{steps.tm.outputs.MAINV}} != ${{steps.tpr.outputs.PRV}} ]; then
-            echo "Version mismatch between main branch and pull request branch"
+          status=$(bash semver.sh ${{steps.tpr.outputs.PRV}} ${{steps.tm.outputs.MAINV}})
+          if [ $status ]; then
+            echo "Version in PR should be greater than that declared in main's version.json"
             exit 1
           fi
