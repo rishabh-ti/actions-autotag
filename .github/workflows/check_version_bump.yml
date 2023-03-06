@@ -2,25 +2,16 @@ name: Check Version Bump
 
 on: [push, pull_request]
 
-env:
-  BRANCH: ${{ github.head_ref || 'v1'}}
-
 jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
-      - name: Create directories
-        run: |
-          mkdir main
-          mkdir ${BRANCH}
-          ls
-
       - name: Checkout main
         uses: actions/checkout@v3
         with:
           ref: main
 
-      - name: Test main
+      - name: Get main version
         id: tm
         run: |
           ls
@@ -31,24 +22,15 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
 
-      - name: Test PR
+      - name: Get PR version
         id: tpr
         run: |
           ls
           echo "PRV=$(jq -r '.version' version.json)" >> $GITHUB_OUTPUT
 
-
-      - name: validate new version
+      - name: Compare versions
         run: |
-          ls
-          echo ${{steps.tm.outputs.MAINV}}
-          echo ${{steps.tpr.outputs.PRV}}
-
-      # - name: Compare versions
-      #   run: |
-      #     main_version=$(jq -r '.version' main/version.json)
-      #     pr_version=$(jq -r '.version' ${BRANCH}/version.json)
-      #     if [ "$main_version" != "$pr_version" ]; then
-      #       echo "Version mismatch between main branch and pull request branch"
-      #       exit 1
-      #     fi
+          if [ ${{steps.tm.outputs.MAINV}} != ${{steps.tpr.outputs.PRV}} ]; then
+            echo "Version mismatch between main branch and pull request branch"
+            exit 1
+          fi
