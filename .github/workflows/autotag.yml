@@ -1,25 +1,19 @@
-name: "Tag on Pull Request merge"
+# example 1: on push to master
+name: Bump version
 on:
-  # Should trigger only when a Pull Request is Closed
-  # (the action will not create the Tag if the Pull Request is discarded - closed without merge)
-  pull_request:
-    types:
-      - closed
+  push:
     branches:
       - main
-
 jobs:
-  TagOnPR:
-    name: Tag on Pull Request merge
-    runs-on: ubuntu-latest
-    # This 'if' condition is important for ensuring the workflow only runs for merged PRs
-    #  (avoid running when a PR is discarded - closed without merging)
-    if: github.event.pull_request.merged == true
+  build:
+    runs-on: ubuntu-22.04
     steps:
-      - name: Tag on PR merge
-        id: tag-on-pr-merge
-        uses: David-Lor/action-tag-on-pr-merge@main
-        with:
-          push-tag: true
-      - name: Print fetched tag
-        run: echo "${{ steps.tag-on-pr-merge.outputs.tag }}"
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: '0'
+
+    - name: Bump version and push tag
+      uses: anothrNick/github-tag-action@1.55.0 # Don't use @master unless you're happy to test the latest version
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        WITH_V: true
