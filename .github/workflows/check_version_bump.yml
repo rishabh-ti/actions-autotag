@@ -24,8 +24,8 @@ jobs:
       - name: Checkout PR
         uses: actions/checkout@v3
         with:
-          ref: ${BRANCH}
-          path: "${BRANCH}"
+          ref: $BRANCH
+          path: "$BRANCH"
 
       - name: validate new version
         run: bash semver.sh
