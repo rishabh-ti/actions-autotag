@@ -17,3 +17,11 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         WITH_V: true
+
+  test:
+      name: test
+      needs: ['build']
+      runs-on: ubuntu-latest
+      steps:
+        - name: Log outputs from previous action
+          run: echo "YO -\n-\n ${{needs.build.outputs}}"
