@@ -18,14 +18,14 @@ jobs:
       - name: Checkout main
         uses: actions/checkout@v3
         with:
-          ref: main
-          path: "main"
+          ref: ${{ github.head_ref }}
+          path: ${{ github.head_ref }}
 
       - name: Checkout PR
         uses: actions/checkout@v3
         with:
-          ref: ${{BRANCH}}
-          path: "${{BRANCH}}"
+          ref: $BRANCH
+          path: $BRANCH
 
       - name: validate new version
         run: bash semver.sh
