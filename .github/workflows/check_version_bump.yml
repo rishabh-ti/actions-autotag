@@ -35,7 +35,7 @@ jobs:
       - name: Test PR
         run: |
           ls
-          jq -r '.version' ${BRANCH}/version.json
+          jq -r '.version' version.json
 
       - name: validate new version
         run: |
