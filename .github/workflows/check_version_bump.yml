@@ -31,5 +31,5 @@ jobs:
             echo "Version in PR should be greater than that declared in main's version.json"
             exit 1
           else
-            echo "Version bump detected"
+            echo "Version bump detected. Status Check passed"
           fi
