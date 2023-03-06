@@ -25,7 +25,8 @@ jobs:
     steps:
       - name: Log outputs from previous action
         run: |
-          echo ${{needs.build.outputs.new_tag}}
-          echo ${{needs.build.outputs.tag}}
-          echo "${{needs.build.outputs.part}}"
-          echo "${{needs.build.outputs.status}}"
+          echo ${{needs.build.outputs.new_tag}}  >> $GITHUB_OUTPUT
+          echo ${{needs.build.outputs.tag}}  >> $GITHUB_OUTPUT
+          echo "${{needs.build.outputs.part}}"  >> $GITHUB_OUTPUT
+          echo "${{needs.build.outputs.status}}"  >> $GITHUB_OUTPUT
+          echo "${{needs.build.outputs}}"  >> $GITHUB_OUTPUT
