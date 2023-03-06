@@ -1,8 +1,6 @@
 name: Check Version Bump
 
-on:
-  push:
-    branches: [v1]
+on: [pull_request]
 
 env:
   BRANCH: ${{ github.head_ref }}
