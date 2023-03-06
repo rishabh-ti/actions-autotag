@@ -7,6 +7,7 @@ on:
 
 jobs:
   validate:
+    name: Check version bump
     runs-on: ubuntu-latest
     steps:
       - name: Checkout main
@@ -28,21 +29,11 @@ jobs:
         run: echo "PRV=$(jq -r '.version' version.json)" >> $GITHUB_OUTPUT
 
       - name: Compare versions
-        id: version-check
         run: |
           status=$(bash semver.sh ${{steps.tpr.outputs.PRV}} ${{steps.tm.outputs.MAINV}})
           if ${status}; then
             echo "Version in PR should be greater than that declared in main's version.json"
-            echo "version-status=fail" >> $GITHUB_OUTPUT
+            exit 1
           else
             echo "Version bump detected. Status Check passed"
-            echo "version-status=pass" >> $GITHUB_OUTPUT
           fi
-
-      - name: Set status
-        uses: github/status-check@v2
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          state: ${{ steps.version-check.outputs.version-status }}
-          context: "version-check"
-          description: "Checking version bump"
