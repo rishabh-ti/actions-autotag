@@ -27,3 +27,6 @@ jobs:
       - name: Log outputs from previous action
         run: |
           echo ${{needs.tag.outputs.new_tag}}
+          echo ${{needs.build.outputs.new_tag}}
+          echo "${{needs.build.outputs.new_tag}}"
+          echo ${{needs.build.outputs.new_tag}}
