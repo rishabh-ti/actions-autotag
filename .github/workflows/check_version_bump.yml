@@ -27,8 +27,9 @@ jobs:
       - name: Compare versions
         run: |
           status=$(bash semver.sh ${{steps.tpr.outputs.PRV}} ${{steps.tm.outputs.MAINV}})
-          echo $status
           if [ $status ]; then
             echo "Version in PR should be greater than that declared in main's version.json"
             exit 1
+          else
+            echo "Version bump detected"
           fi

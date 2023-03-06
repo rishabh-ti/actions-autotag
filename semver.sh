@@ -27,24 +27,3 @@ compare2() {
     fi
 }
 compare2 $1 $2
-
-
-compare() {
-    local V1="${1}"
-    local V2="${2}"
-    if semver_ste $V1 $V2; then
-      echo "${V1} <= ${V2}"
-    else
-      echo "${V1} > ${V2}"
-    fi
-}
-
-# compare "5.8.110" "6.10.100"
-# compare "5.10.0" "5.8.0"
-# compare "5.8.0" "5.8.0"
-# compare "1.1.1" "1.1.20"
-# compare "1.1.20" "1.1.1"
-# compare "1.2.3" "4.5.6"
-# compare "4.4554.634" "4.542.453"
-
-# if prv <= mainv: exit
