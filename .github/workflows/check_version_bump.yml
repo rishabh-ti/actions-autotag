@@ -28,7 +28,9 @@ jobs:
           path: ${{ github.head_ref }}
 
       - name: validate new version
-        run: bash semver.sh
+        run: |
+          ls
+          bash semver.sh
 
       - name: Compare versions
         run: |
