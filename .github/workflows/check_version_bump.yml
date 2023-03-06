@@ -21,11 +21,23 @@ jobs:
           ref: main
           path: main
 
+      - name: Test main
+        run: |
+          git status
+          ls
+          jq -r '.version' version.json
+
       - name: Checkout PR
         uses: actions/checkout@v3
         with:
           ref: ${{ github.head_ref }}
           path: ${{ github.head_ref }}
+
+      - name: Test PR
+        run: |
+          git status
+          ls
+          jq -r '.version' version.json
 
       - name: validate new version
         run: |
