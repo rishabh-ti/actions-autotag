@@ -25,7 +25,7 @@ jobs:
     steps:
       - name: Log outputs from previous action
         run: |
-          echo "YO -\n-\n ${{needs.build.outputs}}" | jq
           echo ${{needs.build.outputs.new_tag}}
           echo ${{needs.build.outputs.tag}}
-          echo ${{needs.build.outputs.part}}
+          echo "${{needs.build.outputs.part}}"
+          echo "${{needs.build.outputs.status}}"
