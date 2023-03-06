@@ -3,7 +3,7 @@ name: Check Version Bump
 on: [push, pull_request]
 
 env:
-  BRANCH: ${{ github.head_ref }}
+  BRANCH: ${{ github.head_ref }} ?? "something"
 
 jobs:
   validate:
