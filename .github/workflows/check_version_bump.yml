@@ -3,7 +3,7 @@ name: Check Version Bump
 on: [push, pull_request]
 
 env:
-  BRANCH: ${{ github.head_ref || 'xyz'}}
+  BRANCH: ${{ github.head_ref || 'v1'}}
 
 jobs:
   validate:
@@ -24,8 +24,8 @@ jobs:
       - name: Checkout PR
         uses: actions/checkout@v3
         with:
-          ref: $BRANCH
-          path: "$BRANCH"
+          ref: ${{BRANCH}}
+          path: "${{BRANCH}}"
 
       - name: validate new version
         run: bash semver.sh
