@@ -23,7 +23,6 @@ jobs:
 
       - name: Test main
         run: |
-          git status
           ls
           jq -r '.version' version.json
 
@@ -35,7 +34,6 @@ jobs:
 
       - name: Test PR
         run: |
-          git status
           ls
           jq -r '.version' version.json
 
