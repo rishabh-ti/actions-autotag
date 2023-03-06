@@ -16,8 +16,7 @@ jobs:
         run: |
           mkdir main
           mkdir ${BRANCH}
-
-
+          
       - name: Checkout main
         uses: actions/checkout@v3
         with:
