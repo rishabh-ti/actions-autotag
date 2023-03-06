@@ -27,6 +27,16 @@ jobs:
     needs: ["build"]
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+          
       - name: Log outputs from previous action
         run: |
+          echo ${{needs.build.outputs.version}}
+          ls
           python test.py "version" ${{needs.build.outputs.version}}
